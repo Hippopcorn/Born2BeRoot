@@ -1,0 +1,2 @@
+- Create a new VM
+- Settings --> storage --> add debian.iso at the controller IDE
