@@ -1,2 +1,2 @@
-- Create a new VM
+- Sur virtualBox : Create a new VM
 - Settings --> storage --> add debian.iso at the controller IDE
