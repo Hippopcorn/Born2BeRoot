@@ -1,2 +1,25 @@
-- Sur virtualBox : Create a new VM
+- Sur virtualBox : Create a new VM in the folder sgoinfre --> 30gb for bonus
 - Settings --> storage --> add debian.iso at the controller IDE
+- Select langage and keyboard
+- hostname : evarache42
+- domaine : nothing
+- password root user : Chaton42&*
+- name user : evarache
+- password user : Poussin42&*
+- partition disk : if bonus --> Manual
+- partition 1 : primary : for the operating system : 500m : static files of the boot loader
+- partition 2 : logical : 30.7 GB
+- encrypter les volumes
+- encryption paraphrase : Chaton42&*
+- configure the logical volume manager
+- create volume group
+- set up and configure every logical volume (home, root, srv, swap, tmp, var, var-log)
+- installation of debian finished
+
+- Use debian :
+- password : Chaton42&*
+
+- su -> switch user 
+- apt install sudo
+- sudo -V -> print the sudo version 
+- sudo reboot -> reboot the system
