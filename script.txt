@@ -1,0 +1,112 @@
+# arch
+uname -a = CPU architecture (-a = all)
+
+#CPU PHYSICAL
+grep "physical id" /proc/cpuinfo | wc -l 
+grep processor /proc/cpuinfo | wc -l
+
+La commande grep (Global Regular Expression Print) recherche et affiche toutes les lignes du fichier 
+/proc/cpuinfo qui contiennent l'expression exacte "physical id".
+
+Recherche "physical id" dans le fichier et compte les lignes pour avoir le nombre de cores
+
+Le symbole | (le pipe ou tuyau) prend la sortie de la commande précédente (toutes les lignes contenant 
+"physical id") et la transmet comme entrée à la commande suivante.
+wc : La commande Word Count (compteur de mots).
+-l : L'option -l indique à wc de compter uniquement le nombre de lignes qu'il reçoit en entrée.
+
+#RAM
+free --mega | awk '$1 == "Mem:" {print $3}'
+free --mega
+free : C'est un utilitaire Linux standard qui affiche la quantité totale, 
+utilisée et libre de mémoire physique et de mémoire d'échange (swap) sur le système.
+--mega (ou -m pour certaines versions) : Cette option force l'affichage des valeurs de mémoire en Mégaoctets (MB). 
+Cela rend le traitement des nombres plus facile pour la prochaine commande (awk).
+awk : C'est un langage de programmation et un utilitaire puissant de traitement de texte qui fonctionne ligne 
+par ligne. Il divise chaque ligne en champs (ou colonnes) basés sur un séparateur (par défaut, l'espace).
+$1 == "Mem:" : C'est la condition de awk.
+
+$1 représente le premier champ (la première colonne) de la ligne en cours de traitement.
+awk vérifie si le premier champ est exactement égal à la chaîne de caractères "Mem:".
+But : Cela garantit que seule la ligne contenant les statistiques de la mémoire principale (RAM) est traitée.
+
+{print $3} : C'est l'action à exécuter si la condition est remplie.
+$3 représente le troisième champ (la troisième colonne) de la ligne sélectionnée.
+En regardant la sortie typique de free (section 1), le troisième champ de la ligne "Mem:" 
+correspond à la colonne "utilisé".
+--> on affiche donc la mémoire utilisée
+
+printf("(%.2f%%)\n", $3/$2*100) 
+%.2f : C'est le spécificateur de format pour le résultat du calcul.
+
+%f indique que l'on attend un nombre à virgule flottante (un nombre décimal).
+**.2** indique de limiter l'affichage à deux chiffres après la virgule.
+%% : C'est la façon d'afficher le caractère littéral pourcentage (%). 
+(Le premier % signale le caractère de formatage, le second % est le caractère à afficher).
+
+# DISK
+df -m | grep "/dev/" | grep -v "/boot" | awk '{disk_t += $2} END {printf ("%.1fGb\n"), disk_t/1024}'
+df = "disk filesystem"
+grep "/dev/" = pour selectionner que les vraies partitions de disque et exclure les systèmes de fichiers 
+virtuels ou temporaires (comme tmpfs, udev, etc.) qui n'affectent pas l'espace de stockage permanent.
+grep -v "/boot" = exclu le /boot pour se concentrer sur les partitions de données principales.
+disk_t +=32 -> awk itère sur chaque ligne restante. Il prend la valeur du deuxième champ ($2), qui est 
+la Taille Totale de la partition en Mo, et l'ajoute à la variable disk_t.
+printf ("%.1fGb\n") -> Affiche le résultat. Le format %.1f force l'affichage avec un seul chiffre après la virgule, 
+et Gb\n ajoute le suffixe "Gb" (pour Gigaoctet) suivi d'un saut de ligne.
+disk_t/1024 -> La somme totale disk_t est divisée par 1024 pour la convertir des Mégaoctets (Mo) en Gigaoctets (Go).
+
+df -m | grep "/dev/" | grep -v "/boot" | awk '{disk_u += $3} END {print disk_u}'
+
+# CPU
+vmstat 1 2 | tail -1 | awk '{printf $15}'
+vmstat : affiche des statistiques système, nous permettant d'obtenir des détails généraux sur les processus, 
+l'utilisation de la mémoire, l'activité du CPU, l'état du système, etc.
+tail = selectionne la derniere ligne
+awk '{printf $15}' =  va chercher la 15eme colonne
+
+# LAST BOOT 
+who -b | awk '$1 == "system" {print $3 " " $4}'
+who -b : system boot  2025-12-15 15:00 
+
+# LVM
+if [ $(lsblk | grep "lvm" | wc -l) -gt 0 ]; then echo yes; else echo no; fi
+lsblk  = affiche des informations sur tous les périphériques de blocs (disques durs, SSD, mémoires, etc.).
+-gt (outil de comparaison = verifie si le nb obtenu est superieur a 0 (greater))
+Donc si on retrouve lvm une fois ou plus on ecrit yes, sinon on ecrit no
+
+# TCP connections
+ss -ta | grep ESTAB | wc -l
+ss = affiche toutes les connections TCB (ESTAB, LISTEN, CLOSE..)
+grep ESTAB (pour n'avoir que les connections etablies)
+wc -l = on compte les lignes
+
+# IP ADRESS & MAC
+hostname -I = adresse hote (IP)
+ip link | grep "link/ether" | awk '{print $2}'  = adresse MAC
+Les adresses MAC représentent les cartes réseau (matérielles ou logicielles) que le système utilise pour gérer les flux de données. 
+Elles sont distinctes, uniques, et nécessaires au bon routage du trafic.
+
+
+# Number of commands executed with sudo
+journalctl _COMM=sudo | grep COMMAND | wc -l
+journalctl = outil chargé de collecter et de gérer les journaux du système (systemd).
+_COMM=sudo = filtre les entrées du journal en spécifiant l'exécutable
+grep COMMAND = affiche uniquement les lignes qui détaillent la commande réelle qui a été exécutée par sudo.
+
+
+To run the scipt every 10 minutes, we need to use crontab.
+- sudo crontab -u root -e
+crontab : utilitaire de gestion des tables de planification (cron tables). 
+Il permet de voir, de modifier ou de supprimer les tâches programmées.
+-u root : Elle indique à la commande crontab que vous souhaitez agir sur le fichier de planification de l'utilisateur 
+spécifié, ici root, et non sur votre propre fichier crontab personnel.
+Dans le fichier :
+-e : edit = ouvre le fichier pour modification
+- add the command : */10 * * * * sh /path_to_file.sh
+chaque * représente une unité de temps : minutes/heure/jour du mois/mois/jour de la semaine
+ex : 0 */4 * * * : À la minute 0, toutes les 4 heures (0h00, 4h00, 8h00, 12h00, etc.).
+
+LiteSpeed :
+Serveur web performant qui est souvent utilisé comme alternative aux serveurs web traditionnels comme Apache et Nginx.
+Il est célèbre pour sa rapidité et son efficacité, surtout lorsqu'il s'agit de servir des applications dynamiques comme WordPress.

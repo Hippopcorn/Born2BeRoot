@@ -16,10 +16,95 @@
 - set up and configure every logical volume (home, root, srv, swap, tmp, var, var-log)
 - installation of debian finished
 
-- Use debian :
+- Use debian :su
 - password : Chaton42&*
+- lsblk : print the architechtur
 
-- su -> switch user 
+- su -> switch to root user (utilisateur principal)
 - apt install sudo
 - sudo -V -> print the sudo version 
-- sudo reboot -> reboot the system
+- sudo reboot -> reboot the system (redemarre)
+
+Create a user or a group : 
+- sudo adduser
+- sudo addgroup (GID = Group ID ex :GID 1001)
+
+Add a user to a group : 
+- sudo adduser <username> <groupname>
+
+Check the users of a group :
+- getent group <groupname>
+
+Install the ssh server : 
+- sudo apt install openssh-server
+
+Connexion with ssh :
+- to connect on the 4242 port to control the VM from the terminal of the real machine
+- ssh <votre_utilisateur>@localhost -p 4241
+
+Firewall :
+- sudo apt install ufw
+- sudo ufw enable
+- sudo ufw allow 4242 -> accept the connections on 4242 port
+- sudo ufw status
+
+Password policy
+- edit /etc/login.defs  --> modify the password parameters (ex : PASS_MAX_DAYS 30)
+PASS_MAX_DAYS: Maximum number of days before password expires.
+PASS_MIN_DAYS: Minimum number of days before password can be changed.
+PASS_WARN_AGE: warning message besore password expire.
+
+Install password quality library 
+- sudo apt install libpam-pwquality
+- edit /etc/pam.d/common-password
+minlen=10 ➤ The minimum characters a password must contain.
+ucredit=-1 ➤ The password must contain at least one capital letter. We must write it with a - sign, as this is how it knows that it refers to minimum characters; if we put a + sign it will refer to maximum characters.
+dcredit=-1 ➤ The password must contain at least one digit.
+lcredit=-1 ➤ The password must contain at least one lowercase letter.
+maxrepeat=3 ➤ The password cannot have the same character repeated three consecutive times.
+reject_username ➤ The password cannot contain the username within itself.
+difok=7 ➤ The password must contain at least seven different characters from the last password used.
+enforce_for_root ➤ We will implement this password policy for root.
+
+Signature.txt 
+- dans le goinfre là où il y a le projet :
+- shasum born2beroot.vdi
+
+------------BONUS--------------
+
+Lighttpd: 
+Web server designed to be fast, secure, flexible, and standards-compliant. It is optimized for 
+environments where speed is a top priority because it consumes less CPU and RAM than other servers.
+
+WordPress: 
+It is a content management system focused on the creation of any type of website.
+doit etre installé ici : /var/www/
+www (World Wide Web) : C'est le sous-répertoire désigné pour les fichiers 
+qui seront accessibles publiquement via le protocole HTTP.
+
+Packages a installer :
+wget: 
+It is a command line tool used to download files from the web.
+
+zip: 
+It is a command line utility for compressing and decompressing files in ZIP format.
+
+MariaDB: 
+It is a database. It is used for various purposes, such as data warehousing, 
+e-commerce, enterprise-level functions, and logging applications.
+CREATE DATABASE wp_database;
+SHOW DATABASES;
+CREATE USER 'evarache'@'localhost' IDENTIFIED BY '12345';
+#assigner l'user a la base et donner les permissions :
+GRANT ALL PRIVILEGES ON wp_database.* TO 'gemartin'@'localhost'; (.* pour donner acces a tout ce qui se trouve dans la base)
+
+PHP: 
+It is a programming language. It is mainly used to develop dynamic web applications and interactive websites. 
+PHP runs on the server side.
+- sudo apt install php-cgi php-mysql = packages to be able to run web applications written in PHP language 
+and that need to connect to a MySQL database.
+
+Connect WordPress to the database : 
+- cd /var/www/html
+- cp wp-config-sample.php wp-config.php
+- vim wp-config.php -> change the database name and the user name

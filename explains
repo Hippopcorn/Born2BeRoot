@@ -1,0 +1,49 @@
+GRUB
+-> is the reference implementation of the Free Software Foundation's Multiboot Specification, 
+which provides a user the choice to boot one of multiple operating systems installed on a computer 
+or select a specific kernel configuration available on a particular operating system's partitions.
+
+sudo
+-> program for Unix-like computer operating systems that enables users to run programs 
+with the security privileges of another user, by default the superuser (root user). It originally stood for "superuser do"
+
+SSH 
+-> The acronym SSH stands for "Secure Shell." The SSH protocol was designed as a secure alternative to 
+unsecured remote shell protocols. It utilizes a client-server paradigm, in which clients and servers 
+communicate via a secure channel.
+
+UFW (Uncomplicated Firewall) firewall
+
+TTY (TeleTYpewriter) est le terme générique historique pour désigner un terminal ou une console.
+
+
+sudo_config :
+Defaults -> le paramètre s'applique par défaut à tous les utilisateurs et toutes les commandes exécutées via sudo.
+log_files -> Each action using sudo will be archived, both inputs and outputs. The log file
+will be saved in the /var/log/sudo/ folder
+requiretty -> if requiretty is activate, sudo exigera que la commande soit lancée depuis 
+un terminal interactif (un TTY). De nombreux exploits ou scripts d'escalade de privilèges tentent 
+d'exécuter sudo en arrière-plan sans l'interaction d'un utilisateur réel. Si requiretty est activé, 
+ces scripts sont bloqués car ils ne peuvent pas fournir l'environnement TTY requis.
+Dans certains cas, cela peut empêcher l'exploitation de failles dans des applications web ou d'autres 
+services qui pourraient tenter d'injecter des commandes sudo à l'aveugle.
+
+secure-path = chemin d'acces securisé
+Le Scénario d'Attaque (sans secure_path) : Un utilisateur malveillant pourrait créer un répertoire dans son dossier personnel (/home/utilisateur_malveillant/bin) et y placer un faux programme appelé ls ou cat. Cet utilisateur pourrait modifier sa propre variable $PATH pour que le système cherche d'abord dans ce répertoire malveillant. Si sudo utilisait cette $PATH, lorsque l'utilisateur tape sudo ls, c'est le faux programme ls qui serait exécuté avec les droits de root.
+
+script
+Is a sequence of commands stored in a file that, when executed, will perform the function of each command.
+
+
+grep (Global Regular Expression Print)
+
+A chercher plus tard : 
+pourquoi debian par rapport a rocky? -> plus generaliste
+wall ?
+cron?
+crontab: is a background process manager. The specified processes will be executed at the time you specify in the crontab file.
+
+mofifier le hostname : etc/host ou etc/hostname et modifier le nom
+
+LiteSpeed: 
+It is a proprietary web server software. It is the fourth most popular web server, and is estimated to be used by 10% of websites.
