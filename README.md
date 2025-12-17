@@ -69,3 +69,7 @@ https://mariadb.org/
 https://www.php.net/
 
 https://www.netdata.cloud/
+
+https://noreply.gitbook.io/born2beroot
+
+AI was used to understand few commands and concepts. (partitions, script, SSH..)
