@@ -110,3 +110,7 @@ ex : 0 */4 * * * : À la minute 0, toutes les 4 heures (0h00, 4h00, 8h00, 12h00,
 LiteSpeed :
 Serveur web performant qui est souvent utilisé comme alternative aux serveurs web traditionnels comme Apache et Nginx.
 Il est célèbre pour sa rapidité et son efficacité, surtout lorsqu'il s'agit de servir des applications dynamiques comme WordPress.
+
+Utiliser le "vrai" mode login:
+su - 
+Le petit tiret - force Debian à charger tout l'environnement de l'administrateur, y compris les bons chemins vers les outils système.

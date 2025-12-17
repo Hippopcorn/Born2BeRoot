@@ -38,12 +38,27 @@ Is a sequence of commands stored in a file that, when executed, will perform the
 grep (Global Regular Expression Print)
 
 A chercher plus tard : 
-pourquoi debian par rapport a rocky? -> plus generaliste
-wall ?
-cron?
-crontab: is a background process manager. The specified processes will be executed at the time you specify in the crontab file.
+- pourquoi debian par rapport a rocky? -> plus generaliste
+- wall ?
+- cron?
+- crontab: is a background process manager. The specified processes will be executed at the time you specify in the crontab file.
+- partitions ? A quoi elles servent et comment on choisi leur taille?
+- ajouter un user? donner les droits de su?
 
 mofifier le hostname : etc/host ou etc/hostname et modifier le nom
 
 LiteSpeed: 
 It is a proprietary web server software. It is the fourth most popular web server, and is estimated to be used by 10% of websites.
+
+
+Dossiers :
+/etc/ 
+- On ne trouve que des fichiers texte qui dictent comment les logiciels et le système doivent se comporter.
+
+/opt/ 
+(pour Optional) est l'endroit classique pour installer des applications tierces qui ne font pas partie du système de base.
+
+/srv/ (pour Service).
+C'est explicitement conçu pour les données des services web ou serveurs de données.
+
+chown
