@@ -11,23 +11,23 @@ Apt (Advanced Package Tool) is the package manager that handles the installation
 
 # Instructions
 
-Open the VM corresponding to the signature.txt.
+Open the Virtual Machine corresponding to the signature.txt.
 
 To connect to the VM from our machine, use the command :
 ```ssh user_name@localhost -p 4241```
 
 If you want to create a new user, you can use 
-```sudo adduser user_name``` To create a group, use :
-```sudo addgroup group_name```
-To add a user to a group : ```sudo adduser <user_name> <group_name>```
-Then, to allow a user to connect with SSH, open this file ```/etc/ssh/sshd_config``` and add the user on the line AllowUsers. Ex : AllowUsers user1 user2
+```sudo adduser user_name```.  
+To create a group, use :```sudo addgroup group_name```.  
+To add a user to a group : ```sudo adduser <user_name> <group_name>```.  
+Then, to allow a user to connect with SSH, open this file ```/etc/ssh/sshd_config``` and add the user on the line AllowUsers.  *Ex : AllowUsers user1 user2*
 
-If you want to change the hostname Change the hostname, you can change it in the files ```/etc/hostname``` and ```/etc/hosts``` and then use ```sudo reboot```
+If you want to change the hostname, you can change it in the files ```/etc/hostname``` and ```/etc/hosts``` and then use ```sudo reboot```.  
 If you want to change a password, you can use ```sudo passwd root``` for the root password or ```sudo passwd user``` for an user password.
 
 
 ## Policy
-The policy of sudo is located in this file ```etc/sudoers.d/sudo_config```
+The policy of sudo is located in this file ```etc/sudoers.d/sudo_config```.  
 You have several rules to create a password, located in this file : ```/etc/login.defs```
 
 
@@ -51,11 +51,9 @@ I chose UFW because it is the default tool on Debian. Its syntax is simple and i
 I chose VirtualBox because it offers excellent performance and a comprehensive set of features. It provides advanced networking configurations and robust snapshot management, both of which are essential for testing security policies during development.
 
 **WordPress** is the most popular Content Management System globally, enabling the development of dynamic web applications.
-PHP-FPM processes the WordPress scripts. MariaDB stores and serves the site's data. For the web service, I use Lighttpd, a secure and lightweight web server 
-designed for high-performance environments with low memory footprint.
+PHP-FPM processes the WordPress scripts. MariaDB stores and serves the site's data. For the web service, I use Lighttpd, a secure and lightweight web server designed for high-performance environments with low memory footprint.
 
-**Netdata** is a real-time monitoring tool. It is configured to monitor CPU and RAM usage, analyze the performance of LVM partitions and
-alert in the event of anormal system load.
+**Netdata** is a real-time monitoring tool. It is configured to monitor CPU and RAM usage, analyze the performance of LVM partitions and alert in the event of anormal system load.
 
 
 # Ressources
